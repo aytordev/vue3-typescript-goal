@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src && stylelint \"./src/**/*.vue\" \"./src/**/*.scss\"",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src && stylelint --fix \"./src/**/*.vue\" \"./src/**/*.scss\"",
     "format": "prettier .  --write"
   },
   "dependencies": {
