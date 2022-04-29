@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+  import { ref } from 'vue';
 
-defineProps({
-  msg: { type: String, default: "Hola" },
-});
+  defineProps({
+    msg: { type: String, default: 'Hola' },
+  });
 
   const count = ref(0);
 </script>
