@@ -14,6 +14,6 @@ export const updateTodos = async (movie: Todos): Promise<Todos> => {
   return await put(`/todos/${movie.id}`, movie);
 };
 
-export const createTodos = async (movie: Todos): Promise<any> => {
+export const createTodos = async (movie: any): Promise<any> => {
   return await post('/todos', movie);
 };

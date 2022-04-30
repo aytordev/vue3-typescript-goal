@@ -6,7 +6,7 @@ const headers: Readonly<Record<string, string>> = {
 };
 
 const http = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:3001',
   headers,
 });
 
