@@ -1,9 +1,7 @@
 import {
   createTodos,
-  delListOfTodos,
   delTodos,
   fetchTodos,
-  updateListOfTodos,
   updateTodos
 } from '@/api/routes/todos';
 import { Todos } from '@/models/types/todos';
@@ -30,18 +28,6 @@ export const putTodos = async (todo: Todos): Promise<void> => {
 
 export const removeTodos = async (todo: Todos): Promise<void> => {
   await delTodos(todo.id);
-  const todos = await fetchTodos();
-  store.setTodosState(todos);
-};
-
-export const removeListOfTodos = async (listOfIds: number[]): Promise<void> => {
-  await delListOfTodos(listOfIds);
-  const todos = await fetchTodos();
-  store.setTodosState(todos);
-};
-
-export const putListOfTodos = async (listOfTodos: Todos[]): Promise<void> => {
-  await updateListOfTodos(listOfTodos);
   const todos = await fetchTodos();
   store.setTodosState(todos);
 };

@@ -16,6 +16,13 @@ export const useTodosStore = defineStore('todos', {
       return this.todos.length;
     },
 
+    all(): Todos[] {
+      if (this.todos === null) {
+        this.todos = [];
+      }
+      return this.todos;
+    },
+
     active(): Todos[] {
       if (this.todos === null) {
         this.todos = [];

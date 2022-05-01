@@ -1,16 +1,17 @@
 <script lang="ts" setup>
-  import inputVue from '@/components/shared/input/input.vue';
+  import { updateTodos } from '@/api/routes/todos';
+import inputVue from '@/components/shared/input/input.vue';
 import {
-putListOfTodos,
+getTodos,
 setTodos
 } from '@/composables/todos-controller/todos-controller';
 import { Todos } from '@/models/types/todos';
 import { useTodosStore } from '@/store/modules/todos/todos';
 import { storeToRefs } from 'pinia';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
   const store = useTodosStore();
-  const { todos } = storeToRefs(store);
+  const { all } = storeToRefs(store);
 
   const todo = reactive<Todos>({
     id: 0,
@@ -23,7 +24,20 @@ import { reactive } from 'vue';
     todo.description = '';
   };
 
-  const log = async () => await putListOfTodos(todos.value);
+  const completed = ref<boolean>(false);
+
+  const log = async () => {
+    const checkState = all.value.filter((todo) => todo.completed).length > 0;
+    const todoModified = all.value.map((todo) =>
+      updateTodos({
+        ...todo,
+        completed: !checkState,
+      })
+    );
+
+    await Promise.all(todoModified);
+    await getTodos();
+  };
 </script>
 
 <template>

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
   import {
 getTodos,
-removeListOfTodos
+removeTodos
 } from '@/composables/todos-controller/todos-controller';
+import router from '@/router';
 import { useTodosStore } from '@/store/modules/todos/todos';
 import { storeToRefs } from 'pinia';
 
@@ -17,9 +18,11 @@ import { storeToRefs } from 'pinia';
     await getTodos();
     await store.setTodosState(completed.value);
   };
+
   const removeCompleted = () => {
-    const todosToBeRemoved = completed.value.map((todo) => todo.id);
-    removeListOfTodos(todosToBeRemoved);
+    const todosToBeRemoved = completed.value.map((todo) => removeTodos(todo));
+
+    Promise.all(todosToBeRemoved);
   };
 </script>
 
@@ -27,17 +30,41 @@ import { storeToRefs } from 'pinia';
   <div>
     <strong class="todo-count">{{ total }} items left</strong>
     <div class="filters">
-      <li><router-link to="/" @click="getTodos()">All</router-link></li>
       <li>
-        <router-link to="/active" @click="getActive()">Active</router-link>
+        <router-link
+          to="/"
+          class=""
+          :class="router.currentRoute.value.path === '/' ? 'selected' : ''"
+          @click="getTodos()"
+          >All</router-link
+        >
       </li>
       <li>
-        <router-link to="/completed" @click="getCompleted()"
+        <router-link
+          to="/active"
+          :class="
+            router.currentRoute.value.path === '/active' ? 'selected' : ''
+          "
+          @click="getActive()"
+          >Active</router-link
+        >
+      </li>
+      <li>
+        <router-link
+          to="/completed"
+          :class="
+            router.currentRoute.value.path === '/completed' ? 'selected' : ''
+          "
+          @click="getCompleted()"
           >Completed</router-link
         >
       </li>
     </div>
-    <button class="clear-completed" @click="removeCompleted()">
+    <button
+      v-show="completed.length > 0"
+      class="clear-completed"
+      @click="removeCompleted()"
+    >
       Clear completed
     </button>
   </div>
