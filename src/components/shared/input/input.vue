@@ -37,18 +37,18 @@
   .new-todo,
   .edit {
     position: relative;
-    margin: 0;
+    box-sizing: border-box;
     width: 100%;
-    font-size: 24px;
+    padding: 6px;
+    margin: 0;
     font-family: inherit;
+    font-size: 24px;
     font-weight: inherit;
     line-height: 1.4em;
-    border: 0;
     color: inherit;
-    padding: 6px;
+    border: 0;
     border: 1px solid #999;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
+    box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

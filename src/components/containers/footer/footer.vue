@@ -1,11 +1,11 @@
 <script lang="ts" setup>
   import {
-getTodos,
-removeTodos
-} from '@/composables/todos-controller/todos-controller';
-import router from '@/router';
-import { useTodosStore } from '@/store/modules/todos/todos';
-import { storeToRefs } from 'pinia';
+    getTodos,
+    removeTodos,
+  } from '@/composables/todos-controller/todos-controller';
+  import router from '@/router';
+  import { useTodosStore } from '@/store/modules/todos/todos';
+  import { storeToRefs } from 'pinia';
 
   const store = useTodosStore();
   const { total, active, completed } = storeToRefs(store);
@@ -81,12 +81,12 @@ import { storeToRefs } from 'pinia';
   }
 
   .filters {
-    margin: 0;
-    padding: 0;
-    list-style: none;
     position: absolute;
     right: 0;
     left: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
   .filters li {
@@ -94,26 +94,26 @@ import { storeToRefs } from 'pinia';
   }
 
   .filters li a {
-    color: inherit;
-    margin: 3px;
     padding: 3px 7px;
+    margin: 3px;
+    color: inherit;
     text-decoration: none;
     border: 1px solid transparent;
     border-radius: 3px;
   }
 
   .filters li a:hover {
-    border-color: rgba(175, 47, 47, 0.1);
+    border-color: rgb(175 47 47 / 10%);
   }
 
   .filters li a.selected {
-    border-color: rgba(175, 47, 47, 0.2);
+    border-color: rgb(175 47 47 / 20%);
   }
 
   .clear-completed,
   html .clear-completed:active {
-    float: right;
     position: relative;
+    float: right;
     line-height: 20px;
     text-decoration: none;
     cursor: pointer;

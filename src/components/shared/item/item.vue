@@ -52,7 +52,7 @@ import inputVue from '../input/input.vue';
         class="edit"
         autofocus
         @keydown.enter="todoModified(todo)"
-        @blur="editingMode = false"
+        @blur="todoModified(todo)"
       />
     </li>
   </div>
@@ -60,8 +60,8 @@ import inputVue from '../input/input.vue';
 
 <style lang="css" scoped>
   .todo-list {
-    margin: 0;
     padding: 0;
+    margin: 0;
     list-style: none;
   }
 
@@ -76,8 +76,8 @@ import inputVue from '../input/input.vue';
   }
 
   .todo-list li.editing {
-    border-bottom: none;
     padding: 0;
+    border-bottom: none;
   }
 
   .todo-list li.editing .edit {
@@ -92,19 +92,21 @@ import inputVue from '../input/input.vue';
   }
 
   .todo-list li .toggle {
-    text-align: center;
-    width: 40px;
-    /* auto, since non-WebKit browsers doesn't support input styling */
-    height: auto;
     position: absolute;
     top: 0;
     bottom: 0;
-    margin: auto 0;
-    border: none;
-    /* Mobile Safari */
-    -webkit-appearance: none;
-    appearance: none;
     display: block;
+    width: 40px;
+
+    /* auto, since non-WebKit browsers doesn't support input styling */
+    height: auto;
+    margin: auto 0;
+    text-align: center;
+    border: none;
+
+    /* Mobile Safari */
+    appearance: none;
+    appearance: none;
   }
 
   .todo-list li .toggle {
@@ -126,12 +128,12 @@ import inputVue from '../input/input.vue';
   }
 
   .todo-list li label {
-    word-break: break-all;
-    padding: 15px 15px 15px 60px;
     display: flex;
+    padding: 15px 15px 15px 60px;
     line-height: 1.2;
-    transition: color 0.4s;
     text-align: center;
+    word-break: break-all;
+    transition: color 0.4s;
   }
 
   .todo-list li.completed label {
@@ -140,17 +142,17 @@ import inputVue from '../input/input.vue';
   }
 
   .todo-list li .destroy {
-    display: none;
     position: absolute;
     top: 0;
     right: 10px;
     bottom: 0;
+    display: none;
     width: 40px;
     height: 40px;
     margin: auto 0;
+    margin-bottom: 11px;
     font-size: 30px;
     color: #cc9a9a;
-    margin-bottom: 11px;
     transition: color 0.2s ease-out;
   }
 
@@ -158,7 +160,7 @@ import inputVue from '../input/input.vue';
     color: #af5b5e;
   }
 
-  .todo-list li .destroy:after {
+  .todo-list li .destroy::after {
     content: '×';
   }
 

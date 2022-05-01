@@ -2,23 +2,28 @@
   import Footer from '@/components/containers/footer/footer.vue';
 import Header from '@/components/containers/header/header.vue';
 import Main from '@/components/containers/main/main.vue';
+import { useTodosStore } from '@/store/modules/todos/todos';
+import { storeToRefs } from 'pinia';
+
+  const store = useTodosStore();
+  const { all } = storeToRefs(store);
 </script>
 
 <template>
   <div class="todoapp">
     <h1>todos</h1>
     <Header></Header>
-    <Main class="main"></Main>
-    <Footer class="footer"></Footer>
+    <Main v-show="all.length > 0" class="main"></Main>
+    <Footer v-show="all.length > 0" class="footer"></Footer>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .todoapp {
-    background: #fff;
-    margin: 130px 0 40px 0;
     position: relative;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    margin: 130px 0 40px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
   }
 
   .todoapp h1 {
@@ -27,11 +32,11 @@ import Main from '@/components/containers/main/main.vue';
     width: 100%;
     font-size: 100px;
     font-weight: 100;
+    color: rgb(175 47 47 / 15%);
     text-align: center;
-    color: rgba(175, 47, 47, 0.15);
-    -webkit-text-rendering: optimizeLegibility;
-    -moz-text-rendering: optimizeLegibility;
-    text-rendering: optimizeLegibility;
+    -webkit-text-rendering: optimizelegibility;
+    -moz-text-rendering: optimizelegibility;
+    text-rendering: optimizelegibility;
   }
 
   .main {
@@ -41,24 +46,24 @@ import Main from '@/components/containers/main/main.vue';
   }
 
   .footer {
-    color: #777;
-    padding: 10px 15px;
     height: 20px;
+    padding: 10px 15px;
+    color: #777;
     text-align: center;
     border-top: 1px solid #e6e6e6;
   }
 
-  .footer:before {
-    content: '';
+  .footer::before {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
     height: 50px;
     overflow: hidden;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
-      0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
-      0 17px 2px -6px rgba(0, 0, 0, 0.2);
+    content: '';
+    box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6,
+      0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6,
+      0 17px 2px -6px rgb(0 0 0 / 20%);
   }
 
   @media (max-width: 430px) {
