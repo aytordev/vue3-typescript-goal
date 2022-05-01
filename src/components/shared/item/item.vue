@@ -3,32 +3,55 @@
 import { PropType, ref } from 'vue';
 import inputVue from '../input/input.vue';
 
-  defineProps({
+  const props = defineProps({
     todo: { type: Object as PropType<Todos>, default: null },
   });
 
+  const emit = defineEmits([
+    'todoToBeChecked',
+    'todoToBeDeleted',
+    'todoToBeModified',
+  ]);
+
+  const todoChecked = (todo: Todos) =>
+    emit('todoToBeChecked', { ...todo, completed: !completed.value });
+
+  const todoDeleted = (todo: Todos) => emit('todoToBeDeleted', todo);
+  const todoModified = (todo: Todos) => {
+    editingMode.value = false;
+    emit('todoToBeModified', { ...todo, description: description.value });
+  };
   const editingMode = ref<boolean>(false);
+  const completed = ref<boolean>(props.todo.completed);
+  const description = ref<string>(props.todo.description);
 </script>
 
 <template>
   <div class="todo-list">
-    <li v-if="!editingMode">
-      <input id="" type="checkbox" :name="todo.description" class="toggle" />
+    <li v-if="!editingMode" :class="todo.completed ? 'completed' : ''">
+      <input
+        id=""
+        v-model="completed"
+        type="checkbox"
+        :name="todo.description"
+        class="toggle"
+        @click="todoChecked(todo)"
+      />
 
-      <label>
+      <label @dblclick="editingMode = !editingMode">
         {{ todo?.description }}
       </label>
 
-      <button class="destroy"></button>
+      <button class="destroy" @click="todoDeleted(todo)"></button>
     </li>
     <li v-else class="editing" @keydown.esc="editingMode = false">
       <inputVue
         ref="inputRef"
+        v-model="description"
         type="text"
         class="edit"
-        :value="todo?.description"
         autofocus
-        @keydown.enter="editingMode = false"
+        @keydown.enter="todoModified(todo)"
         @blur="editingMode = false"
       />
     </li>
@@ -81,6 +104,7 @@ import inputVue from '../input/input.vue';
     /* Mobile Safari */
     -webkit-appearance: none;
     appearance: none;
+    display: block;
   }
 
   .todo-list li .toggle {
@@ -104,9 +128,10 @@ import inputVue from '../input/input.vue';
   .todo-list li label {
     word-break: break-all;
     padding: 15px 15px 15px 60px;
-    display: block;
+    display: flex;
     line-height: 1.2;
     transition: color 0.4s;
+    text-align: center;
   }
 
   .todo-list li.completed label {

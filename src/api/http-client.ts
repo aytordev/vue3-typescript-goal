@@ -29,6 +29,7 @@ const put = <T = any, R = AxiosResponse<T>>(
 ): Promise<R> => http.put(url, data, config);
 const del = <T = any, R = AxiosResponse<T>>(
   url: string,
+  data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => http.delete<T, R>(url, config);
 

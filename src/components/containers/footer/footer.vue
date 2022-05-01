@@ -1,14 +1,45 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import {
+getTodos,
+removeListOfTodos
+} from '@/composables/todos-controller/todos-controller';
+import { useTodosStore } from '@/store/modules/todos/todos';
+import { storeToRefs } from 'pinia';
+
+  const store = useTodosStore();
+  const { total, active, completed } = storeToRefs(store);
+
+  const getActive = async () => {
+    await getTodos();
+    await store.setTodosState(active.value);
+  };
+  const getCompleted = async () => {
+    await getTodos();
+    await store.setTodosState(completed.value);
+  };
+  const removeCompleted = () => {
+    const todosToBeRemoved = completed.value.map((todo) => todo.id);
+    removeListOfTodos(todosToBeRemoved);
+  };
+</script>
 
 <template>
   <div>
-    <strong class="todo-count">2 items left</strong>
+    <strong class="todo-count">{{ total }} items left</strong>
     <div class="filters">
-      <li><router-link to="">All</router-link></li>
-      <li><router-link to="">Selected</router-link></li>
-      <li><router-link to="">Completed</router-link></li>
+      <li><router-link to="/" @click="getTodos()">All</router-link></li>
+      <li>
+        <router-link to="/active" @click="getActive()">Active</router-link>
+      </li>
+      <li>
+        <router-link to="/completed" @click="getCompleted()"
+          >Completed</router-link
+        >
+      </li>
     </div>
-    <button class="clear-completed">Clear completed</button>
+    <button class="clear-completed" @click="removeCompleted()">
+      Clear completed
+    </button>
   </div>
 </template>
 

@@ -1,37 +1,41 @@
-<script lang="ts">
-  import { createTodos } from '@/api/routes/todos';
-import inputVue from '@/components/shared/input/input.vue';
-import { defineComponent, Ref, ref } from 'vue';
-  export default defineComponent({
-    name: 'Main',
-    components: {
-      inputVue,
-    },
-    setup() {
-      const todoValue: Ref<string> = ref<string>('');
+<script lang="ts" setup>
+  import inputVue from '@/components/shared/input/input.vue';
+import {
+putListOfTodos,
+setTodos
+} from '@/composables/todos-controller/todos-controller';
+import { Todos } from '@/models/types/todos';
+import { useTodosStore } from '@/store/modules/todos/todos';
+import { storeToRefs } from 'pinia';
+import { reactive } from 'vue';
 
-      const query = async () => {
-        console.log(todoValue);
-        await createTodos({ description: todoValue.value, completed: false });
-      };
+  const store = useTodosStore();
+  const { todos } = storeToRefs(store);
 
-      return {
-        todoValue,
-        query,
-      };
-    },
+  const todo = reactive<Todos>({
+    id: 0,
+    description: '',
+    completed: false,
   });
+
+  const query = async () => {
+    setTodos(todo);
+    todo.description = '';
+  };
+
+  const log = async () => await putListOfTodos(todos.value);
 </script>
 
 <template>
   <input id="" type="checkbox" name="" class="toggle-all" />
-  <label for=""></label>
+  <label for="" @click="log"></label>
   <inputVue
     ref="todosRef"
+    :model-value="todo.description"
     type="text"
     class="new-todo"
     autofocus
-    @input="(event: any) => (todoValue = (event.target?.value))"
+    @input="(event: any) => (todo.description = event.target.value)"
     @keydown.enter="query"
   />
 </template>
@@ -75,10 +79,11 @@ import { defineComponent, Ref, ref } from 'vue';
     height: 34px;
     font-size: 0;
     position: absolute;
-    top: -52px;
+    // top: -52px;
     left: -13px;
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
+    z-index: 3;
   }
 
   .toggle-all + label:before {

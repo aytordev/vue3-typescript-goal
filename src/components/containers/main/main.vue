@@ -1,33 +1,49 @@
-<script lang="ts">
-  import { fetchTodos } from '@/api/routes/todos';
-import item from '@/components/shared/item/item.vue';
+<script lang="ts" setup>
+  import item from '@/components/shared/item/item.vue';
+import {
+getTodos,
+putTodos,
+removeTodos
+} from '@/composables/todos-controller/todos-controller';
 import { Todos } from '@/models/types/todos';
-import { defineComponent, onMounted, Ref, ref } from 'vue';
+import router from '@/router';
+import { useTodosStore } from '@/store/modules/todos/todos';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
-  export default defineComponent({
-    name: 'Main',
-    components: {
-      item,
-    },
-    setup() {
-      let listOfTodos: Ref<Todos[]> = ref<Todos[]>([]);
-      onMounted(async () => {
-        listOfTodos.value = await fetchTodos();
-        console.log(listOfTodos.value);
-      });
+  const store = useTodosStore();
+  const { todos, active, completed } = storeToRefs(store);
+  const route = router.currentRoute.value;
 
-      return {
-        listOfTodos,
-      };
-    },
+  const todoChecked = (emitted: Todos) => putTodos(emitted);
+  const todoDeleted = (emitted: Todos) => removeTodos(emitted);
+  const todoModified = (emitted: Todos) => putTodos(emitted);
+
+  const getActive = async () => {
+    await getTodos();
+    await store.setTodosState(active.value);
+  };
+  const getCompleted = async () => {
+    await getTodos();
+    await store.setTodosState(completed.value);
+  };
+
+  onMounted(async () => {
+    route.path === '/'
+      ? await getTodos()
+      : route.path === '/active'
+      ? getActive()
+      : getCompleted();
   });
 </script>
 
 <template>
   <item
-    v-for="todoElement in listOfTodos"
-    v-show="listOfTodos.length > 0"
+    v-for="todoElement in todos"
     :key="todoElement.id"
     :todo="todoElement"
+    @todo-to-be-checked="todoChecked"
+    @todo-to-be-deleted="todoDeleted"
+    @todo-to-be-modified="todoModified"
   />
 </template>

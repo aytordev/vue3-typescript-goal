@@ -1,11 +1,36 @@
 <script setup lang="ts">
+  import { ref } from 'vue';
+
+  const focus = ref(false);
+
   defineProps({
-    value: { type: String, default: '' },
+    type: {
+      type: String,
+      default: 'text',
+    },
+    placeholder: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
+    modelValue: [String, Number],
   });
+
+  const emit = defineEmits(['update:modelValue']);
+
+  const input = (e: Event) =>
+    emit('update:modelValue', (e.target as HTMLInputElement).value);
 </script>
 
 <template>
-  <input class="edit" :value="value" />
+  <input
+    v-bind="$attrs"
+    :type="type"
+    class="edit"
+    :disabled="disabled"
+    :value="modelValue"
+    :placeholder="placeholder"
+    @input="input"
+    @focus="focus = true"
+    @blur="focus = false"
+  />
 </template>
 
 <style scoped lang="scss">

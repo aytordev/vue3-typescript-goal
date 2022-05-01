@@ -6,14 +6,22 @@ export const fetchTodos = async (): Promise<Todos[]> => {
   return response.data;
 };
 
-export const delTodos = async (id: string): Promise<any> => {
+export const delTodos = async (id: number): Promise<any> => {
   return await del(`/todos/${id}`);
 };
 
-export const updateTodos = async (movie: Todos): Promise<Todos> => {
-  return await put(`/todos/${movie.id}`, movie);
+export const delListOfTodos = async (id: number[]): Promise<any> => {
+  return await del(`/todos`, { id });
 };
 
-export const createTodos = async (movie: any): Promise<any> => {
-  return await post('/todos', movie);
+export const updateTodos = async (todo: Todos): Promise<Todos> => {
+  return await put(`/todos/${todo.id}`, todo);
+};
+
+export const updateListOfTodos = async (todo: Todos[]): Promise<Todos> => {
+  return await put(`/todos`, todo);
+};
+
+export const createTodos = async (todo: Todos): Promise<any> => {
+  return await post('/todos', todo);
 };
