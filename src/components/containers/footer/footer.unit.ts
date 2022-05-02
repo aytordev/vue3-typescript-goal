@@ -4,6 +4,7 @@ import { useTodosStore } from '@/store/modules/todos/todos';
 import { render, screen } from '@testing-library/vue';
 import { createPinia, setActivePinia } from 'pinia';
 import footer from './footer.vue';
+import userEvent from '@testing-library/user-event';
 
 describe('footer', () => {
   beforeEach(() => {
@@ -38,9 +39,9 @@ describe('footer', () => {
       ],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
-    const total = screen.getByLabelText('total');
+    const total = screen.getByLabelText('total').textContent;
 
     expect(total).toBe('3 items left');
   });
@@ -58,14 +59,14 @@ describe('footer', () => {
       ],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
-    const total = screen.getByLabelText('total');
+    const total = screen.getByLabelText('total').textContent;
 
     expect(total).toBe('1 item left');
   });
 
-  it('When click on active button it be setted as selected', async () => {
+  it('If route is not /active, button is not selected', async () => {
     const todoStore = useTodosStore();
 
     todoStore.$state = {
@@ -88,14 +89,16 @@ describe('footer', () => {
       ],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
     const active = screen.getByLabelText('active');
 
-    expect(active).toHaveClass('selected');
+    userEvent.click(active);
+
+    expect(active).not.toHaveClass('selected');
   });
 
-  it('When click on completed button it be setted as selected', async () => {
+  it('If route is not /completed, button is not selected', async () => {
     const todoStore = useTodosStore();
 
     todoStore.$state = {
@@ -118,14 +121,16 @@ describe('footer', () => {
       ],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
     const completed = screen.getByLabelText('completed');
 
-    expect(completed).toHaveClass('selected');
+    userEvent.click(completed);
+
+    expect(completed).not.toHaveClass('selected');
   });
 
-  it('When click on all button it be setted as selected', async () => {
+  it('If route is /, button is selected', async () => {
     const todoStore = useTodosStore();
 
     todoStore.$state = {
@@ -148,7 +153,7 @@ describe('footer', () => {
       ],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
     const all = screen.getByLabelText('all');
 
@@ -162,7 +167,7 @@ describe('footer', () => {
       todos: [],
     };
 
-    render(footer, { store: todoStore });
+    render(footer);
 
     const clear = screen.getByLabelText('clear');
 
