@@ -1,14 +1,14 @@
 <script lang="ts" setup>
   import inputVue from '@/components/shared/input/input.vue';
-import {
-getTodos,
-putTodos,
-setTodos
-} from '@/composables/todos-controller/todos-controller';
-import { Todos } from '@/models/types/todos';
-import { useTodosStore } from '@/store/modules/todos/todos';
-import { storeToRefs } from 'pinia';
-import { reactive } from 'vue';
+  import {
+    getTodos,
+    putTodos,
+    setTodos,
+  } from '@/composables/todos-controller/todos-controller';
+  import { Todos } from '@/models/types/todos';
+  import { useTodosStore } from '@/store/modules/todos/todos';
+  import { storeToRefs } from 'pinia';
+  import { reactive } from 'vue';
 
   const store = useTodosStore();
   const { all } = storeToRefs(store);

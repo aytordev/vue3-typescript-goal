@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { Todos } from '@/models/types/todos';
-import { PropType, ref } from 'vue';
-import inputVue from '../input/input.vue';
+  import { PropType, ref } from 'vue';
+  import inputVue from '../input/input.vue';
 
   const props = defineProps({
     todo: { type: Object as PropType<Todos>, default: null },
@@ -35,14 +35,19 @@ import inputVue from '../input/input.vue';
         type="checkbox"
         :name="todo.description"
         class="toggle"
+        aria-label="checkbox"
         @click="todoChecked(todo)"
       />
 
-      <label @dblclick="editingMode = !editingMode">
+      <label aria-label="label" @dblclick="editingMode = !editingMode">
         {{ todo?.description }}
       </label>
 
-      <button class="destroy" @click="todoDeleted(todo)"></button>
+      <button
+        class="destroy"
+        aria-label="button"
+        @click="todoDeleted(todo)"
+      ></button>
     </li>
     <li v-else class="editing" @keydown.esc="editingMode = false">
       <inputVue
@@ -51,6 +56,7 @@ import inputVue from '../input/input.vue';
         type="text"
         class="edit"
         autofocus
+        aria-label="input"
         @keydown.enter="todoModified(todo)"
         @blur="todoModified(todo)"
       />

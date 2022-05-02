@@ -1,15 +1,15 @@
 <script lang="ts" setup>
   import item from '@/components/shared/item/item.vue';
-import {
-getTodos,
-putTodos,
-removeTodos
-} from '@/composables/todos-controller/todos-controller';
-import { Todos } from '@/models/types/todos';
-import router from '@/router';
-import { useTodosStore } from '@/store/modules/todos/todos';
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
+  import {
+    getTodos,
+    putTodos,
+    removeTodos,
+  } from '@/composables/todos-controller/todos-controller';
+  import { Todos } from '@/models/types/todos';
+  import router from '@/router';
+  import { useTodosStore } from '@/store/modules/todos/todos';
+  import { storeToRefs } from 'pinia';
+  import { onMounted } from 'vue';
 
   const store = useTodosStore();
   const { todos, active, completed } = storeToRefs(store);
@@ -42,6 +42,7 @@ import { onMounted } from 'vue';
     v-for="todoElement in todos"
     :key="todoElement.id"
     :todo="todoElement"
+    aria-label="main"
     @todo-to-be-checked="todoChecked"
     @todo-to-be-deleted="todoDeleted"
     @todo-to-be-modified="todoModified"

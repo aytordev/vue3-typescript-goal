@@ -27,6 +27,7 @@
     :disabled="disabled"
     :value="modelValue"
     :placeholder="placeholder"
+    aria-label="input"
     @input="input"
     @focus="focus = true"
     @blur="focus = false"

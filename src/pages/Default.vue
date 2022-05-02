@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import Footer from '@/components/containers/footer/footer.vue';
-import Header from '@/components/containers/header/header.vue';
-import Main from '@/components/containers/main/main.vue';
-import { useTodosStore } from '@/store/modules/todos/todos';
-import { storeToRefs } from 'pinia';
+  import Header from '@/components/containers/header/header.vue';
+  import Main from '@/components/containers/main/main.vue';
+  import { useTodosStore } from '@/store/modules/todos/todos';
+  import { storeToRefs } from 'pinia';
 
   const store = useTodosStore();
   const { all } = storeToRefs(store);

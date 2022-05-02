@@ -5,4 +5,8 @@ module.exports = {
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   testMatch: ['**/tests/unit**/*.spec.[jt]s?(x)', '**/*/*.unit.[jt]s?(x)'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  testEnvironment: 'jsdom',
 };

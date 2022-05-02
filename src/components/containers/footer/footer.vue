@@ -28,12 +28,14 @@
 
 <template>
   <div>
-    <strong class="todo-count">{{ total }} items left</strong>
+    <strong class="todo-count" aria-label="total"
+      >{{ total }} {{ total > 1 ? 'items' : 'item' }} left</strong
+    >
     <div class="filters">
       <li>
         <router-link
           to="/"
-          class=""
+          aria-label="all"
           :class="router.currentRoute.value.path === '/' ? 'selected' : ''"
           @click="getTodos()"
           >All</router-link
@@ -42,6 +44,7 @@
       <li>
         <router-link
           to="/active"
+          aria-label="active"
           :class="
             router.currentRoute.value.path === '/active' ? 'selected' : ''
           "
@@ -52,6 +55,7 @@
       <li>
         <router-link
           to="/completed"
+          aria-label="completed"
           :class="
             router.currentRoute.value.path === '/completed' ? 'selected' : ''
           "
@@ -63,6 +67,7 @@
     <button
       v-show="completed.length > 0"
       class="clear-completed"
+      aria-label="clear"
       @click="removeCompleted()"
     >
       Clear completed
