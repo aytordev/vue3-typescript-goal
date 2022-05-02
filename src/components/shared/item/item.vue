@@ -18,8 +18,11 @@
 
   const todoDeleted = (todo: Todos) => emit('todoToBeDeleted', todo);
   const todoModified = (todo: Todos) => {
+    if (description.value === '') todoDeleted(todo);
+    if (description.value !== '' && editingMode.value)
+      emit('todoToBeModified', { ...todo, description: description.value });
+    description.value = props.todo.description;
     editingMode.value = false;
-    emit('todoToBeModified', { ...todo, description: description.value });
   };
   const editingMode = ref<boolean>(false);
   const description = ref<string>(props.todo.description);
