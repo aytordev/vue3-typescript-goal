@@ -2,7 +2,14 @@
 
 ## Execute instruction
 
-- ```yarn install```
-- ```yarn run start``` for run `json-server`.
-- ```yarn run dev``` for run project in `development` mode.
-- ```yarn run build```and ```yarn run preview```for preview production bundler.
+- Install dependencies
+```yarn install```
+- Run API (JSON-server)
+```yarn run start```
+- Run project in `development` mode.
+```yarn run dev``` for run project in `development` mode.
+
+OR
+
+- Preview production bundler.
+```yarn run build```and ```yarn run preview```
