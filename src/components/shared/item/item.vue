@@ -14,7 +14,7 @@
   ]);
 
   const todoChecked = (todo: Todos) =>
-    emit('todoToBeChecked', { ...todo, completed: !completed.value });
+    emit('todoToBeChecked', { ...todo, completed: !todo.completed });
 
   const todoDeleted = (todo: Todos) => emit('todoToBeDeleted', todo);
   const todoModified = (todo: Todos) => {
@@ -22,7 +22,6 @@
     emit('todoToBeModified', { ...todo, description: description.value });
   };
   const editingMode = ref<boolean>(false);
-  const completed = ref<boolean>(props.todo.completed);
   const description = ref<string>(props.todo.description);
 </script>
 
@@ -31,11 +30,11 @@
     <li v-if="!editingMode" :class="todo.completed ? 'completed' : ''">
       <input
         id=""
-        v-model="completed"
         type="checkbox"
         :name="todo.description"
         class="toggle"
         aria-label="checkbox"
+        :checked="todo.completed"
         @click="todoChecked(todo)"
       />
 
